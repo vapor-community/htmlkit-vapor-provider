@@ -32,9 +32,9 @@
         "package": "HTMLKit",
         "repositoryURL": "https://github.com/vapor-community/HTMLKit.git",
         "state": {
-          "branch": "master",
-          "revision": "aa81be2f0156211a30e2c59d1a890c808b8eab47",
-          "version": null
+          "branch": null,
+          "revision": "7cf9c3250342a93b317a1235dfeed013868c5b4b",
+          "version": "2.0.0-beta.1"
         }
       },
       {
