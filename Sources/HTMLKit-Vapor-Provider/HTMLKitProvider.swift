@@ -5,10 +5,21 @@ import NIO
 
 extension Application {
 
-    public var htmlkit: HTMLKit { .init() }
+    public var htmlkit: HTMLKit { .shared }
 
     public class HTMLKit {
-        public var renderer = HTMLRenderer()
+
+        static let shared = HTMLKit()
+
+        var renderer = HTMLRenderer()
+
+        public func add<T: HTMLTemplate>(view: T) throws {
+            try renderer.add(view: view)
+        }
+
+        public func add<T: HTMLPage>(view: T) throws {
+            try renderer.add(view: view)
+        }
     }
 }
 
@@ -58,7 +69,7 @@ extension HTMLTemplate {
             do {
                 return try request.htmlkit.render(view: Self.self, with: context)
             } catch HTMLRenderer.Errors.unableToFindFormula {
-                try request.htmlkit.add(view: self)
+                try request.application.htmlkit.add(view: self)
                 return try request.htmlkit.render(view: Self.self, with: context)
             }
         }
@@ -71,7 +82,7 @@ extension HTMLPage {
             do {
                 return try request.htmlkit.render(view: Self.self)
             } catch HTMLRenderer.Errors.unableToFindFormula {
-                try request.htmlkit.add(view: self)
+                try request.application.htmlkit.add(view: self)
                 return try request.htmlkit.render(view: Self.self)
             }
         }
