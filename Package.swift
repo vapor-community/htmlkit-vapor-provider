@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/vapor-community/HTMLKit.git", from: "2.0.0-beta.1"),
+        .package(url: "https://github.com/vapor-community/HTMLKit.git", from: "2.0.0-beta.2"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-beta.3"),
     ],
     targets: [
