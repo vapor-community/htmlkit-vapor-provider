@@ -5,13 +5,25 @@ import NIO
 
 extension Application {
 
-    public var htmlkit: HTMLKit { .shared }
+    public var htmlkit: HTMLKit {
+        if let shared = HTMLKit.shared {
+            return shared
+        }
+        HTMLKit.shared = .init(app: self)
+        return HTMLKit.shared!
+    }
 
-    public class HTMLKit {
+    public class HTMLKit: LifecycleHandler {
 
-        static let shared = HTMLKit()
+        static var shared: HTMLKit?
 
-        var renderer = HTMLRenderer()
+        public var renderer = HTMLRenderer()
+
+        public var localizationPath: String?
+
+        init(app: Application) {
+            app.lifecycle.use(self)
+        }
 
         public func add<T: HTMLTemplate>(view: T) throws {
             try renderer.add(view: view)
@@ -20,12 +32,22 @@ extension Application {
         public func add<T: HTMLPage>(view: T) throws {
             try renderer.add(view: view)
         }
+
+        public func willBoot(_ application: Application) throws {
+            if let localizationPath = localizationPath {
+                try renderer.registerLocalization(atPath: localizationPath, defaultLocale: "en")
+            }
+        }
     }
 }
 
+extension HTMLRenderer.Errors: DebuggableError {
+    public var identifier: String { "HTMLRenderer.Errors" }
+    public var reason: String { self.errorDescription ?? "" }
+}
 
 extension Request {
-    var htmlkit: HTMLRenderer {
+    public var htmlkit: HTMLRenderer {
         self.application.htmlkit.renderer
     }
 }
