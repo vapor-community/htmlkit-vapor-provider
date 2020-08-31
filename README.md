@@ -7,5 +7,29 @@ If you are using Vapor 3, check [this](https://github.com/MatsMoll/htmlkit-vapor
 
 Add this as a dependencies in your `Package.swift` file.
 ```swift
-.package(url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0-beta.3")
+.package(url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0-beta.4")
+...
+// And remember to add BootstrapKit to your target
+.target(
+    name: "YourProject",
+    dependencies: [
+        "HTMLKitVaporProvider",
+        // or
+        .product(name: "HTMLKitVaporProvider", package: "HTMLKitVaporProvider")
+    ])
+```
+
+This will expose a `htmlkit` variable on `Request` and `Application` as shown below.
+```swift
+app.htmlkit.add(view: UserTemplate())
+...
+try req.htmlkit.render(UserTemplate.self, with: user) // Returns a `Response`
+// or
+try req.htmlkit.render(view: UserTemplate.self, with: user) // Returns a `View`
+// or
+UserTemplate().render(with: user, for: req) // Returns an `EventLoopFuture<View>` and will not require `app.add(view: ...)`
+```
+You can also set a localizationPath to enable `Lingo`.
+```swift
+app.htmlkit.localizationPath = "Resources/Localization"
 ```
