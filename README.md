@@ -9,7 +9,7 @@ Add this as a dependencies in your `Package.swift` file.
 ```swift
 .package(url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0-beta.4")
 ...
-// And remember to add BootstrapKit to your target
+// And remember to add HTMLKitVaporProvider to your target
 .target(
     name: "YourProject",
     dependencies: [
