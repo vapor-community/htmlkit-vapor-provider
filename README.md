@@ -27,7 +27,7 @@ try req.htmlkit.render(UserTemplate.self, with: user) // Returns a `Response`
 // or
 try req.htmlkit.render(view: UserTemplate.self, with: user) // Returns a `View`
 // or
-UserTemplate().render(with: user, for: req) // Returns an `EventLoopFuture<View>` and will not require `app.add(view: ...)`
+UserTemplate().render(with: user, for: req) // Returns an `EventLoopFuture<View>` and will not require `app.htmlkit.add(view: ...)`
 ```
 You can also set a localizationPath to enable `Lingo`.
 ```swift
