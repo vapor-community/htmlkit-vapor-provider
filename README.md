@@ -7,7 +7,7 @@ If you are using Vapor 3, check [this](https://github.com/MatsMoll/htmlkit-vapor
 
 Add this as a dependencies in your `Package.swift` file.
 ```swift
-.package(url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0-beta.4")
+.package(name: "HTMLKitVaporProvider", url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0-beta.4")
 ...
 // And remember to add HTMLKitVaporProvider to your target
 .target(
@@ -21,6 +21,7 @@ Add this as a dependencies in your `Package.swift` file.
 
 This will expose a `htmlkit` variable on `Request` and `Application` as shown below.
 ```swift
+// You can preload Template in your configure method in configure.swift to optimize rendering
 app.htmlkit.add(view: UserTemplate())
 ...
 try req.htmlkit.render(UserTemplate.self, with: user) // Returns a `Response`
