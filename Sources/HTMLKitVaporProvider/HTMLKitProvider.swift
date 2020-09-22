@@ -20,6 +20,7 @@ extension Application {
         public var renderer = HTMLRenderer()
 
         public var localizationPath: String?
+        public var defaultLocale: String?
 
         init(app: Application) {
             app.lifecycle.use(self)
@@ -35,7 +36,7 @@ extension Application {
 
         public func willBoot(_ application: Application) throws {
             if let localizationPath = localizationPath {
-                try renderer.registerLocalization(atPath: localizationPath, defaultLocale: "en")
+                try renderer.registerLocalization(atPath: localizationPath, defaultLocale: defaultLocale ?? "en")
             }
         }
     }

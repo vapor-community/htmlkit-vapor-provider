@@ -15,7 +15,7 @@ let package = Package(
             targets: ["HTMLKitVaporProvider"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor-community/HTMLKit.git", from: "2.0.0-beta.3"),
+        .package(url: "https://github.com/vapor-community/HTMLKit.git", from: "2.0.0"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
     ],
     targets: [
