@@ -7,7 +7,7 @@ If you are using Vapor 3, check [this](https://github.com/MatsMoll/htmlkit-vapor
 
 Add this as a dependencies in your `Package.swift` file.
 ```swift
-.package(name: "HTMLKitVaporProvider", url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0-beta.4")
+.package(name: "HTMLKitVaporProvider", url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0")
 ...
 // And remember to add HTMLKitVaporProvider to your target
 .target(
@@ -33,4 +33,5 @@ UserTemplate().render(with: user, for: req) // Returns an `EventLoopFuture<View>
 You can also set a localizationPath to enable `Lingo`.
 ```swift
 app.htmlkit.localizationPath = "Resources/Localization"
+app.htmlkit.defaultLocale = "nb"
 ```
