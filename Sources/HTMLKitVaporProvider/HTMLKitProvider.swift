@@ -17,7 +17,7 @@ extension Application {
 
         static var shared: HTMLKit?
 
-        public var renderer = HTMLRenderer()
+        public var renderer: HTMLRenderable = HTMLRenderer()
 
         public var localizationPath: String?
         public var defaultLocale: String?
@@ -48,7 +48,7 @@ extension HTMLRenderer.Errors: DebuggableError {
 }
 
 extension Request {
-    public var htmlkit: HTMLRenderer {
+    public var htmlkit: HTMLRenderable {
         self.application.htmlkit.renderer
     }
 }
