@@ -17,7 +17,7 @@ extension Application {
 
         static var shared: HTMLKit?
 
-        public var renderer: HTMLRenderable = HTMLRenderer()
+        public var renderer: Renderable = HTMLRenderer()
 
         public var localizationPath: String?
         public var defaultLocale: String?
@@ -48,13 +48,13 @@ extension HTMLRenderer.Errors: DebuggableError {
 }
 
 extension Request {
-    public var htmlkit: HTMLRenderable {
+    public var htmlkit: Renderable  {
         self.application.htmlkit.renderer
     }
 }
 
 ///// An extension that implements most of the helper functions
-extension HTMLRenderable {
+extension Renderable {
 
     /// Renders a `StaticView` formula
     ///
