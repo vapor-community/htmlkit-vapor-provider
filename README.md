@@ -1,37 +1,70 @@
 # HTMLKit-Vapor-Provider
 
-A provider that makes it possible to use [HTMLKit](https://github.com/vapor-community/HTMLKit) with Vapor 4.
-If you are using Vapor 3, check [this](https://github.com/MatsMoll/htmlkit-vapor-3-provider) provider out
+A provider that makes it possible to use [HTMLKit](https://github.com/vapor-community/HTMLKit) with Vapor 4. If you are using Vapor 3, check [this](https://github.com/MatsMoll/htmlkit-vapor-3-provider) provider out.
 
-## Usage
+## Getting started
 
-Add this as a dependencies in your `Package.swift` file.
+### Installation
+
+Add the packages as dependecies to your package.
+
 ```swift
-.package(name: "HTMLKitVaporProvider", url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.0.0")
+/// [Package.swift]
 ...
-// And remember to add HTMLKitVaporProvider to your target
-.target(
-    name: "YourProject",
-    dependencies: [
-        "HTMLKitVaporProvider",
-        // or
-        .product(name: "HTMLKitVaporProvider", package: "HTMLKitVaporProvider")
-    ])
+dependencies: [
+    ...
+    ///1. Add the package
+    .package(name: "HTMLKitVaporProvider", url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.2.0")
+],
+.targets: [
+    .target(
+    ...
+        dependencies: [
+            ...
+            /// 2. Add the product
+            .product(name: "HTMLKitVaporProvider", package: "HTMLKitVaporProvider")
+        ]
+    ),
+    ...
 ```
 
-This will expose a `htmlkit` variable on `Request` and `Application` as shown below.
+### Implementation
+
+This will expose HTMLKit on `Request` and `Application` as shown below.
+
+#### Preload
+
+You can preload a layout to optimize rendering.
+
 ```swift
-// You can preload Template in your configure method in configure.swift to optimize rendering
+/// [configure.swift]
+
 app.htmlkit.add(view: UserTemplate())
-...
-try req.htmlkit.render(UserTemplate.self, with: user) // Returns a `Response`
-// or
-try req.htmlkit.render(view: UserTemplate.self, with: user) // Returns a `View`
-// or
-UserTemplate().render(with: user, for: req) // Returns an `EventLoopFuture<View>` and will not require `app.htmlkit.add(view: ...)`
 ```
-You can also set a localizationPath to enable `Lingo`.
+
+#### Rendering
+
 ```swift
+/// [SimpleController.swift]
+
+...
+/// Returns a `Response`
+try req.htmlkit.render(UserTemplate.self, with: user)
+
+/// Returns a `View`
+try req.htmlkit.render(view: UserTemplate.self, with: user)
+
+/// Returns an `EventLoopFuture<View>` and will not require the preload
+UserTemplate().render(with: user, for: req)
+```
+
+#### Localization
+
+You can also set a localizationPath to enable `Lingo`.
+
+```swift
+/// [configure.swift]
+
 app.htmlkit.localizationPath = "Resources/Localization"
 app.htmlkit.defaultLocale = "nb"
 ```

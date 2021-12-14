@@ -1,7 +1,6 @@
 import XCTest
+import HTMLKitVaporProviderTests
 
-import HTMLKit_Vapor_ProviderTests
-
-var tests = [XCTestCaseEntry]()
-tests += HTMLKit_Vapor_ProviderTests.allTests()
-XCTMain(tests)
+XCTMain([
+    testCase(IntegrationTests.allTests)
+])
