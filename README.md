@@ -14,7 +14,7 @@ Add the packages as dependecies to your package.
 dependencies: [
     ...
     ///1. Add the package
-    .package(name: "HTMLKitVaporProvider", url: "https://github.com/MatsMoll/htmlkit-vapor-provider.git", from: "1.2.0")
+    .package(name: "HTMLKitVaporProvider", url: "https://github.com/vapor-community/htmlkit-vapor-provider.git", from: "1.2.0")
 ],
 .targets: [
     .target(
@@ -48,13 +48,13 @@ app.htmlkit.add(view: UserTemplate())
 /// [SimpleController.swift]
 
 ...
-/// Returns a `Response`
+/// Returns a Response
 try req.htmlkit.render(UserTemplate.self, with: user)
 
-/// Returns a `View`
+/// Returns a View
 try req.htmlkit.render(view: UserTemplate.self, with: user)
 
-/// Returns an `EventLoopFuture<View>` and will not require the preload
+/// Returns an EventLoopFuture<View> and will not require the preload
 UserTemplate().render(with: user, for: req)
 ```
 
