@@ -13,8 +13,8 @@ let package = Package(
             name: "HTMLKitVaporProvider", targets: ["HTMLKitVaporProvider"]),
     ],
     dependencies: [
-        .package(name: "HTMLKit", url: "https://github.com/vapor-community/HTMLKit.git", .branch("master")),
-        .package(name: "vapor", url: "https://github.com/vapor/vapor.git", from: "4.54.0"),
+        .package(name: "HTMLKit", url: "https://github.com/vapor-community/HTMLKit.git", from: "2.4.0"),
+        .package(name: "vapor", url: "https://github.com/vapor/vapor.git", from: "4.54.0")
     ],
     targets: [
         .target(
