@@ -52,7 +52,6 @@ extension Vapor.Application {
 extension Vapor.Request {
     
     public var htmlkit: Renderer {
-        
         self.application.htmlkit.renderer
     }
 }
@@ -61,7 +60,7 @@ extension HTMLKit.View {
     
     public func render(with context: Context, for request: Request) -> EventLoopFuture<Vapor.View> {
         
-        request.eventLoop.submit {
+        return request.eventLoop.submit {
             
             do {
                 
@@ -73,6 +72,20 @@ extension HTMLKit.View {
                 
                 return try request.htmlkit.render(view: Self.self, with: context)
             }
+        }
+    }
+    
+    public func render(with context: Context, for request: Request) throws -> Vapor.View {
+        
+        do {
+            
+            return try request.htmlkit.render(view: Self.self, with: context)
+            
+        } catch Renderer.Errors.unableToFindFormula {
+            
+            try request.application.htmlkit.add(view: self)
+            
+            return try request.htmlkit.render(view: Self.self, with: context)
         }
     }
 }
@@ -93,6 +106,20 @@ extension HTMLKit.Page {
                 
                 return try request.htmlkit.render(view: Self.self)
             }
+        }
+    }
+    
+    public func render(for request: Request) throws -> Vapor.View {
+        
+        do {
+            
+            return try request.htmlkit.render(view: Self.self)
+            
+        } catch Renderer.Errors.unableToFindFormula {
+            
+            try request.application.htmlkit.add(view: self)
+            
+            return try request.htmlkit.render(view: Self.self)
         }
     }
 }
@@ -120,7 +147,7 @@ extension HTMLKit.Renderer {
         var buffer = ByteBufferAllocator().buffer(capacity: page.utf8.count)
         buffer.writeString(page)
         
-        return View(data: buffer)
+        return Vapor.View(data: buffer)
     }
 
     public func render<T: HTMLKit.View>(view type: T.Type, with context: T.Context) throws -> Vapor.View {
@@ -130,7 +157,7 @@ extension HTMLKit.Renderer {
         var buffer = ByteBufferAllocator().buffer(capacity: view.utf8.count)
         buffer.writeString(view)
         
-        return View(data: buffer)
+        return Vapor.View(data: buffer)
     }
 }
 
